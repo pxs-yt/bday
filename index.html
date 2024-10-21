@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,13 +45,13 @@
             height: 30%; /* Middle layer */
             background: #f2b5d4;
             bottom: 50%;
-            margin-top: -30px; /* Overlap */
+            margin-top: -35px; /* Increased overlap */
         }
         .layer-3 {
             height: 20%; /* Top layer */
             background: #fdcfdf;
             bottom: 80%;
-            margin-top: -20px; /* Overlap */
+            margin-top: -25px; /* Increased overlap */
         }
         .icing {
             position: absolute;
@@ -107,8 +107,8 @@
         @media (max-width: 480px) {
             .cake-layer { height: auto; }
             .layer-1 { height: 40%; }
-            .layer-2 { height: 25%; }
-            .layer-3 { height: 15%; }
+            .layer-2 { height: 25%; margin-top: -25px; } /* Increased overlap for smaller screens */
+            .layer-3 { height: 15%; margin-top: -20px; } /* Increased overlap for smaller screens */
             .candle { height: 60px; } /* Adjusted candle height */
             .flame { width: 12px; height: 16px; } /* Smaller flame for mobile */
             .message { font-size: 6vw; }
