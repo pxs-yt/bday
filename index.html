@@ -72,31 +72,27 @@
             border-radius: 5px;
         }
 
-        /* Heart flame animation */
-        .heart {
-            width: 8px; /* Adjusted heart size */
-            height: 8px; /* Adjusted heart size */
-            background: #ff6b6b;
+        /* Fire animation */
+        .flame {
             position: absolute;
-            transform: rotate(45deg);
-            opacity: 0;
+            width: 16px; /* Width of the flame */
+            height: 20px; /* Height of the flame */
+            background: linear-gradient(to top, #ffcc00, #ff6666);
+            border-radius: 50% 50% 0 0;
+            left: 50%; /* Centered above the candle */
+            transform: translate(-50%, -100%); /* Center the flame horizontally and position above the candle */
+            animation: flicker 0.5s infinite alternate;
         }
-        .heart::before,
-        .heart::after {
-            content: "";
-            width: 8px; /* Adjusted heart size */
-            height: 8px; /* Adjusted heart size */
-            background: #ff6b6b;
-            border-radius: 50%;
-            position: absolute;
-        }
-        .heart::before {
-            top: -4px;
-            left: 0;
-        }
-        .heart::after {
-            top: 0;
-            left: -4px;
+
+        @keyframes flicker {
+            0% {
+                transform: translate(-50%, -100%) scale(1) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -100%) scale(1.2) translateY(-5px);
+                opacity: 0.8;
+            }
         }
 
         .message {
@@ -114,6 +110,7 @@
             .layer-2 { height: 25%; }
             .layer-3 { height: 15%; }
             .candle { height: 60px; } /* Adjusted candle height */
+            .flame { width: 12px; height: 16px; } /* Smaller flame for mobile */
             .message { font-size: 6vw; }
         }
     </style>
@@ -125,55 +122,17 @@
             <div class="cake-layer layer-1"></div>
             <div class="cake-layer layer-2"></div>
             <div class="cake-layer layer-3"></div>
-            <div class="candle" style="left: 20%;"><div class="heart" id="flame1"></div></div>
-            <div class="candle" style="left: 50%;"><div class="heart" id="flame2"></div></div>
-            <div class="candle" style="left: 80%;"><div class="heart" id="flame3"></div></div>
+            <div class="candle" style="left: 20%;">
+                <div class="flame"></div>
+            </div>
+            <div class="candle" style="left: 50%;">
+                <div class="flame"></div>
+            </div>
+            <div class="candle" style="left: 80%;">
+                <div class="flame"></div>
+            </div>
         </div>
         <div class="message">Happy 16th Birthday, Arba!❤️</div>
     </div>
-
-    <script>
-        function createHeartFlame(flameId) {
-            const flame = document.getElementById(flameId);
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = '50%'; // Spawn from the center of the candle
-                heart.style.bottom = '100%'; // Start at the top of the candle
-                flame.appendChild(heart);
-
-                let opacity = 1;
-                let bottom = 0;
-                let size = 8; // Adjusted heart size
-                let horizontalMove = (Math.random() - 0.5) * 60; // Horizontal scatter
-
-                const animateHeart = () => {
-                    if (opacity <= 0 || bottom >= 60) {
-                        heart.remove();
-                        return;
-                    }
-
-                    opacity -= 0.02; // Fade out
-                    bottom += 2; // Move up
-                    size -= 0.1; // Shrink
-
-                    heart.style.opacity = opacity;
-                    heart.style.bottom = bottom + 'px';
-                    heart.style.left = (50 + horizontalMove) + '%'; // Scatter horizontally
-                    heart.style.width = size + 'px';
-                    heart.style.height = size + 'px';
-
-                    requestAnimationFrame(animateHeart);
-                };
-
-                requestAnimationFrame(animateHeart);
-            }, 300); // Spawn hearts every 300ms
-        }
-
-        // Start the heart flame animation for each candle
-        createHeartFlame('flame1');
-        createHeartFlame('flame2');
-        createHeartFlame('flame3');
-    </script>
 </body>
 </html>
