@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 16th Birthday, Arba!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1d2439;
+            font-family: 'Dancing Script', cursive;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .cake {
+            width: 200px;
+            height: 180px;
+            background: #f9c5d1;
+            border-radius: 10px;
+            position: relative;
+            margin: 0 auto 20px;
+            max-width: 100%;
+        }
+        .layer {
+            position: absolute;
+            width: 100%;
+            border-radius: 10px;
+        }
+        .layer-1 {
+            height: 60px;
+            background: #f2b5d4;
+            bottom: 0;
+        }
+        .layer-2 {
+            height: 40px;
+            background: #f9c5d1;
+            bottom: 60px;
+        }
+        .layer-3 {
+            height: 30px;
+            background: #fdcfdf;
+            bottom: 100px;
+        }
+        .icing {
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            background: #ffffff;
+            top: 0;
+            border-radius: 10px 10px 0 0;
+        }
+        .drip {
+            position: absolute;
+            width: 15px;
+            height: 25px;
+            background: #ffffff;
+            top: 15px;
+            border-radius: 0 0 15px 15px;
+        }
+        .candle {
+            width: 10px;
+            height: 50px;
+            background: linear-gradient(to bottom, #fdcb6e, #e17055);
+            position: absolute;
+            top: -50px;
+            border-radius: 5px;
+        }
+        .flame {
+            width: 35px;
+            height: 60px;
+            position: absolute;
+            top: -60px;
+            left: -12.5px;
+            overflow: hidden;
+        }
+        .heart {
+            width: 6px;
+            height: 6px;
+            background: #ff6b6b;
+            position: absolute;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before {
+            top: -3px;
+            left: 0;
+        }
+        .heart::after {
+            top: 0;
+            left: -3px;
+        }
+        .message {
+            font-size: 36px;
+            color: #f2ddcc;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-top: 20px;
+            word-wrap: break-word;
+        }
+        
+        /* Media Queries for Responsiveness */
+        @media (max-width: 480px) {
+            .cake {
+                width: 150px;
+                height: 135px;
+            }
+            .layer-1 { height: 45px; }
+            .layer-2 { height: 30px; bottom: 45px; }
+            .layer-3 { height: 22.5px; bottom: 75px; }
+            .candle {
+                height: 37.5px;
+                top: -37.5px;
+            }
+            .flame {
+                height: 45px;
+                top: -45px;
+            }
+            .message {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cake">
+            <div class="icing"></div>
+            <div class="drip" style="left: 10px;"></div>
+            <div class="drip" style="left: 50px;"></div>
+            <div class="drip" style="left: 90px;"></div>
+            <div class="drip" style="left: 130px;"></div>
+            <div class="drip" style="left: 170px;"></div>
+            <div class="layer layer-1"></div>
+            <div class="layer layer-2"></div>
+            <div class="layer layer-3"></div>
+            <div class="candle" style="left: 50px;"><div class="flame" id="flame1"></div></div>
+            <div class="candle" style="left: 95px;"><div class="flame" id="flame2"></div></div>
+            <div class="candle" style="left: 140px;"><div class="flame" id="flame3"></div></div>
+        </div>
+        <div class="message">Happy 16th Birthday, Arba!❤️</div>
+    </div>
 
+    <script>
+        function createHeartFlame(flameId) {
+            const flame = document.getElementById(flameId);
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 25 + 'px';
+                heart.style.bottom = '0px';
+                flame.appendChild(heart);
+
+                let opacity = 0.8 + Math.random() * 0.2;
+                let bottom = 0;
+                let size = 6 + Math.random() * 2;
+                let horizontalMove = (Math.random() - 0.5) * 12;
+
+                const animateHeart = () => {
+                    if (opacity <= 0 || bottom >= 60) {
+                        heart.remove();
+                        return;
+                    }
+
+                    opacity -= 0.01;
+                    bottom += 0.5;
+                    size -= 0.05;
+                    horizontalMove *= 0.99;
+
+                    heart.style.opacity = opacity;
+                    heart.style.bottom = bottom + 'px';
+                    heart.style.left = (parseFloat(heart.style.left) + horizontalMove * 0.1) + 'px';
+                    heart.style.width = size + 'px';
+                    heart.style.height = size + 'px';
+
+                    requestAnimationFrame(animateHeart);
+                };
+
+                requestAnimationFrame(animateHeart);
+            }, 150);
+        }
+
+        createHeartFlame('flame1');
+        createHeartFlame('flame2');
+        createHeartFlame('flame3');
+    </script>
+</body>
+</html>
